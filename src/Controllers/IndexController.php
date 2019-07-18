@@ -69,7 +69,7 @@ class IndexController extends Controller
             'foreign_key' => $foreign_key,
         ];
 
-        $file = \Kd\Upload\Models\File::create($inser);
+        $file = \Yjtec\Upload\Models\File::create($inser);
         return [
             'url'     => $url,
             'path'    => $path,
