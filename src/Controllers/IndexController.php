@@ -14,7 +14,7 @@ class IndexController extends Controller
     }
     /**
      * @OA\Post(
-     *     path="/kd/upload",
+     *     path="/upload",
      *     tags={"Upload"},
      *     summary="上传接口",
      *     operationId="uploadUpload",
