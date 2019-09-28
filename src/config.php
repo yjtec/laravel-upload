@@ -13,4 +13,4 @@ return [
         //     'rules' => ['max:100','mimes:jpeg,bmp,png,jpg']
         // ]
     ]
-]
+];
