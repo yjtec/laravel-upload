@@ -19,7 +19,7 @@ class UploadServiceProvider extends ServiceProvider
 
     public function loadCommands(){
         $this->commands([
-            Console\UploadMakeCommand::class,
+            \Yjtec\Upload\Console\UploadMakeCommand::class,
         ]);
     }
 
@@ -39,13 +39,13 @@ class UploadServiceProvider extends ServiceProvider
 
     public function registerRule(){
         $this->app->singleton('upload.rule', function ($app) {
-            return new Rule(config('upload'));
+            return new \Yjtec\Upload\Rule(config('upload'));
         });
     }
 
     public function registerUpload(){
         $this->app->singleton('upload',function($app){
-            return new Upload(config('upload'));
+            return new \Yjtec\Upload\Upload(config('upload'));
         });
     }
 
