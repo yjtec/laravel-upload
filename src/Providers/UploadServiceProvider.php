@@ -31,7 +31,7 @@ class UploadServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/config.php', 'upload'
+            __DIR__.'/../config.php', 'upload'
         );
         $this->registerRule();
         $this->registerUpload();

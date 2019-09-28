@@ -23,8 +23,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        dd(123);
-        //
         Route::bind('file',function($value){
             return \Yjtec\Upload\Models\File::where('key',$value)->first();
         });
