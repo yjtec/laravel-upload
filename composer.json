@@ -1,34 +1,36 @@
 {
-    "name": "yjtec/laravel-upload",
-    "description": "laravel update controllerr migration mode",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "kidkang",
-            "email": "723616880@qq.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-	   "iidestiny/laravel-filesystem-oss": "^1.2.1"
-	},
-    "autoload": {
-        "psr-4": {
-            "Yjtec\\Upload\\":"src/"
-        }
-    },
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://packagist.laravel-china.org"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Yjtec\\Upload\\UploadServiceProvider"
-            ]
-        }
+  "name": "yjtec/laravel-upload",
+  "description": "laravel update controllerr migration mode",
+  "type": "library",
+  "license": "MIT",
+  "authors": [{
+    "name": "kidkang",
+    "email": "723616880@qq.com"
+  }],
+  "minimum-stability": "dev",
+  "require": {
+    "iidestiny/laravel-filesystem-oss": "^1.2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Yjtec\\Upload\\": "src/"
     }
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.laravel-china.org"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Yjtec\\Upload\\Providers\\UploadServiceProvider",
+        "Yjtec\\Upload\\Providers\\RouteServiceProvider"
+      ],
+      "aliases": {
+        "Upload": "Yjtec\\Upload\\Facades\\Upload"
+      }
+    }
+  }
 }

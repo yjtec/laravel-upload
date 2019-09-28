@@ -1,4 +1,16 @@
 <?php 
-return [ 
-    'api_prefix' => env('UPLOAD_URI_PREFIX','/api/V1/')
-];
+/**
+ * @OA\Schema(
+ *      schema="UploadTypesDefault",
+ *      enum={"store_avatar"}
+ *  )
+ */
+return [
+    'rules' => ['required','max:2','mimes:jpeg,bmp,png,jpg'],
+    'types' => [ 
+        // 'store_avatar' => [
+        //     'path' => 'store_avatar',
+        //     'rules' => ['max:100','mimes:jpeg,bmp,png,jpg']
+        // ]
+    ]
+]
