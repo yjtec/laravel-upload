@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yjtec\Upload\Events\UploadEvent;
 use Yjtec\Upload\Requests\UploadRequest;
+use Yjtec\Upload\Requests\UploadsRequest;
 use Yjtec\Upload\Resources\UploadResource;
+use Yjtec\Upload\Resources\UploadResourceCollection;
 use Yjtec\Upload\Resources\UrlResource;
 use \Yjtec\Upload\Models\File;
 
@@ -38,6 +40,7 @@ class IndexController extends Controller
     {
         return new UrlResource($file);
     }
+
     /**
      * @OA\Post(
      *     path="/upload",
@@ -65,5 +68,38 @@ class IndexController extends Controller
         $fm->save();
         new UploadEvent($fm);
         return new UploadResource($fm);
+    }
+    
+    /**
+     * @OA\Post(
+     *     path="/uploads",
+     *     tags={"Upload"},
+     *     summary="批量上传接口",
+     *     operationId="uploadUploads",
+     *     @OA\Response(
+     *         response=200,
+     *         description="pet response",
+     *         @OA\JsonContent(ref="#/components/schemas/UploadsReturn")
+     *     ),
+     *     @OA\RequestBody(ref="#/components/requestBodies/UploadsRequest"),
+     * )
+     */
+    public function uploads(UploadsRequest $request)
+    {
+        $type = $request->type;
+        $path = app('upload')->getPath();
+        $files = $request->file('file');
+        $return = array();
+        foreach ($files as $v) {
+            $tempFile = $v->store($path);
+            $fm = new File();
+            $fm->file = $v;
+            $fm->type = $type;
+            $fm->path = $tempFile;
+            $fm->save();
+            new UploadEvent($fm);
+            $return[] = $fm;
+        }
+        return new UploadResourceCollection(collect($return));
     }
 }

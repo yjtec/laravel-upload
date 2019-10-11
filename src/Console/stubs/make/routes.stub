@@ -1,2 +1,3 @@
 Route::post('/upload', '\Yjtec\Upload\Controllers\IndexController@upload');
+Route::post('/uploads', '\Yjtec\Upload\Controllers\IndexController@uploads');
 Route::get('/upload/{file}', '\Yjtec\Upload\Controllers\IndexController@url');
