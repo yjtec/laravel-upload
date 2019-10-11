@@ -87,6 +87,7 @@ class IndexController extends Controller
     public function uploads(UploadsRequest $request)
     {
         $type = $request->type;
+        $foreignKey = (int) $request->foreign_key;
         $path = app('upload')->getPath();
         $files = $request->file('file');
         $return = array();
@@ -94,6 +95,7 @@ class IndexController extends Controller
             $tempFile = $v->store($path);
             $fm = new File();
             $fm->file = $v;
+            $fm->foreign_key = $foreignKey;
             $fm->type = $type;
             $fm->path = $tempFile;
             $fm->save();

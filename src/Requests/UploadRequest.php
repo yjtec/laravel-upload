@@ -26,7 +26,7 @@ use Illuminate\Foundation\Http\FormRequest;
  *             @OA\Property(
  *                  property="foreign_key",
  *                  description="文件的唯一建值",
- *                  type="string"
+ *                  type="integer"
  *             ),
  *         )
  *     )

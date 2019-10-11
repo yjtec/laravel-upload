@@ -22,6 +22,11 @@ use Illuminate\Foundation\Http\FormRequest;
  *                  description="上传文件字段名",
  *                  type="file"
  *             ),
+ *             @OA\Property(
+ *                  property="foreign_key",
+ *                  description="文件的唯一建值",
+ *                  type="integer"
+ *             ),
  *         )
  *     )
  * )
