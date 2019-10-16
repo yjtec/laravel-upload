@@ -5,8 +5,10 @@ namespace Yjtec\Upload\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yjtec\Upload\Events\UploadEvent;
+use Yjtec\Upload\Requests\GetListByForeignKeyRequest;
 use Yjtec\Upload\Requests\UploadRequest;
 use Yjtec\Upload\Requests\UploadsRequest;
+use Yjtec\Upload\Resources\GetListByForeignKeyResourceCollection;
 use Yjtec\Upload\Resources\UploadResource;
 use Yjtec\Upload\Resources\UploadResourceCollection;
 use Yjtec\Upload\Resources\UrlResource;
@@ -103,5 +105,32 @@ class IndexController extends Controller
             $return[] = $fm;
         }
         return new UploadResourceCollection(collect($return));
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/upload/getlists/foreignkey",
+     *     tags={"Upload"},
+     *     summary="根据类型和外键获取图片列表",
+     *     description="",
+     *     operationId="uploadGetListByForeignKey",
+     *     @OA\Parameter(ref="#/components/parameters/uploadGetListByForeignKeyParameter_type"),
+     *     @OA\Parameter(ref="#/components/parameters/uploadGetListByForeignKeyParameter_foreign_key"),
+     *     @OA\Response(
+     *         response="200",
+     *         description="successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/uploadGetListByForeignKeyResponse")
+     *     )
+     * )
+     */
+    public function getListByForeignKey(GetListByForeignKeyRequest $request)
+    {
+        $type = $request->get('type', '');
+        $foreignKey = (int) $request->get('foreign_key', 0);
+        $listRs = File::where([
+            'type' => $type,
+            'foreign_key' => $foreignKey,
+        ])->orderBy('id', 'asc')->get();
+        return new GetListByForeignKeyResourceCollection($listRs);
     }
 }
