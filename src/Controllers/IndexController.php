@@ -60,8 +60,17 @@ class IndexController extends Controller
     public function upload(UploadRequest $request)
     {
 
-        $path            = app('upload')->getPath();
-        $truePath        = $request->file('file')->store($path);
+        $path = app('upload')->getPath();
+
+        if ($request->file('file')->getClientMimeType() == "application/octet-stream") {
+            $originalName = $request->file('file')->getClientOriginalName();
+            $extension = substr($originalName,strpos($originalName,'.') + 1);
+
+            $truePath = $request->file('file')->storeAs($path,md5($originalName . '-' . date('m-d-H')) . '.' . $extension);
+        } else {
+            $truePath = $request->file('file')->store($path);
+        }
+
         $fm              = new File();
         $fm->file        = $request->file;
         $fm->foreign_key = $request->foreign_key;
