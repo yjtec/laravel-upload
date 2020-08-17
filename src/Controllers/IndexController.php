@@ -142,4 +142,37 @@ class IndexController extends Controller
         ])->orderBy('id', 'asc')->get();
         return new GetListByForeignKeyResourceCollection($listRs);
     }
+
+    /**
+     * @OA\Post(
+     *     path="/uploadsource",
+     *     tags={"Upload"},
+     *     summary="上传接口(源文件名称)",
+     *     operationId="uploadSourceUpload",
+     *     @OA\Response(
+     *         response=200,
+     *         description="pet response",
+     *         @OA\JsonContent(ref="#/components/schemas/UploadReturn")
+     *     ),
+     *     @OA\RequestBody(ref="#/components/requestBodies/SourceUploadRequest"),
+     * )
+     */
+    public function sourceUpload(SourceUploadRequest $request)
+    {
+
+        $path = app('upload')->getPath();
+        $path .= '/' . $request->input('path','');
+
+        $originalName = $request->file('file')->getClientOriginalName();
+        $truePath = $request->file('file')->storeAs($path, $originalName);
+
+        $fm              = new File();
+        $fm->file        = $request->file;
+        $fm->foreign_key = $request->foreign_key;
+        $fm->type        = $request->type;
+        $fm->path        = $truePath;
+        $fm->save();
+        new UploadEvent($fm);
+        return new UploadResource($fm);
+    }
 }
