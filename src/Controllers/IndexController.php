@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yjtec\Upload\Events\UploadEvent;
 use Yjtec\Upload\Requests\GetListByForeignKeyRequest;
+use Yjtec\Upload\Requests\SourceUploadRequest;
 use Yjtec\Upload\Requests\UploadRequest;
 use Yjtec\Upload\Requests\UploadsRequest;
 use Yjtec\Upload\Resources\GetListByForeignKeyResourceCollection;
