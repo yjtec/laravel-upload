@@ -15,7 +15,11 @@ class File extends Model
     public function getUrlAttribute()
     {
         $path = $this->attributes['path'];
-        return \Storage::url($path);
+        if (config('filesystems.oss_host', '') == '') {
+            return \Storage::url($path);
+        } else {
+            return config('filesystems.oss_host', '') . $path;
+        }
     }
     public function setFileAttribute($file)
     {
